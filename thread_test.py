@@ -1,7 +1,7 @@
 import sys
 from datetime import datetime
 
-from PySide2.QtCore import QThread, Signal, Slot
+from PySide2.QtCore import QThread, Signal, Slot,QObject
 from PySide2.QtWidgets import (QApplication, QMainWindow, QVBoxLayout,QTextEdit,QLabel,
                                QHBoxLayout,QPushButton,QWidget)
 
@@ -67,7 +67,7 @@ class MainWindow(QMainWindow):
     def update_text(self, text):
         self.text_widget.append(text)
 
-class Worker(QThread):
+class Worker(QObject):
     text_signal = Signal(str)
     def __init__(self, parent=None):
         super().__init__(parent)
