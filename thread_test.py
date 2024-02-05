@@ -1,5 +1,6 @@
 import sys
 from datetime import datetime
+from time import sleep
 
 from PySide2.QtCore import QThread, Signal, Slot,QObject
 from PySide2.QtWidgets import (QApplication, QMainWindow, QVBoxLayout,QTextEdit,QLabel,
@@ -78,7 +79,7 @@ class Worker(QObject):
         self.running = True
         while self.running:
             self.text_signal.emit(f"Time is: {datetime.now()}")
-            self.sleep(1)
+            sleep(1)
     
     def stop(self):
         self.running = False
