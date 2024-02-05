@@ -7,7 +7,6 @@ from PySide2.QtWidgets import (QApplication, QMainWindow, QVBoxLayout,QTextEdit,
 
 
 class MainWindow(QMainWindow):
-    splash_text_signal = Signal(str)
     """Main window class, the main window of the application."""
     def __init__(self):
         """Initializes the main window object."""
