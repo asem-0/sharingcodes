@@ -1,7 +1,7 @@
 import sys
 from datetime import datetime
 
-from PySide2.QtCore import QThread, Signal
+from PySide2.QtCore import QThread, Signal, Slot
 from PySide2.QtWidgets import (QApplication, QMainWindow, QVBoxLayout,QTextEdit,QLabel,
                                QHBoxLayout,QPushButton,QWidget)
 
@@ -51,7 +51,6 @@ class MainWindow(QMainWindow):
         ### you can try this by commenting the following line, then uncommenting the line in toggle_thread
         self.thread_operator.started.connect(self.worker_object.run)
 
-
     def toggle_thread(self):
         # Check if the thread is running
         if self.thread_operator.isRunning():
@@ -65,6 +64,7 @@ class MainWindow(QMainWindow):
             #self.thread_operator.run()
             self.toggle_button.setText("Stop")
     
+    @Slot(str)
     def update_text(self, text):
         self.text_widget.append(text)
 
@@ -73,15 +73,17 @@ class Worker(QThread):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.running = True
-
+    
     def run(self):
+        self.text_signal.emit("Thread started")
         self.running = True
         while self.running:
             self.text_signal.emit(f"Time is: {datetime.now()}")
             self.sleep(1)
-
+    
     def stop(self):
         self.running = False
+        self.text_signal.emit("Thread stopped")
 
 
 app = QApplication([])
